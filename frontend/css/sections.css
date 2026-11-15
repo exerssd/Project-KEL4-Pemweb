@@ -1,0 +1,103 @@
+/* ===== Leaderboard, keunggulan, pembayaran ===== */
+
+.tabs {
+  display: inline-flex;
+  background: var(--surface-2);
+  padding: 4px;
+  border-radius: 12px;
+  gap: 4px;
+  margin-bottom: 18px;
+}
+
+.tabs button {
+  border: 0;
+  background: none;
+  color: var(--muted);
+  padding: 8px 18px;
+  border-radius: 9px;
+  font: 600 14px Poppins,system-ui,sans-serif;
+  cursor: pointer;
+}
+
+.tabs button.on {
+  background: var(--gradient);
+  color: #fff;
+}
+
+.lb {
+  display: grid;
+  gap: 10px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 16px;
+}
+
+.rk {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: var(--surface-2);
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.row:nth-child(-n+3) .rk {
+  background: var(--gradient);
+  color: #fff;
+}
+
+.row em {
+  margin-left: auto;
+  font-style: normal;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.feat {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+  gap: 16px;
+}
+
+.feat div {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.feat i {
+  font-style: normal;
+  font-size: 26px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.feat p {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.pay {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pay span {
+  padding: 10px 18px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 14px;
+}
