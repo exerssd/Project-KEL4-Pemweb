@@ -27,6 +27,10 @@
     margin-right: auto;
   }
 
+  .nav-actions {
+    margin-left: auto;
+  }
+
   nav {
     order: 3;
     width: 100%;

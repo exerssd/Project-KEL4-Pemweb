@@ -52,6 +52,30 @@ nav a:hover {
   color: #fff;
 }
 
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+}
+
+.auth-btn {
+  border: 1px solid #ffffff32;
+  background: #ffffff14;
+  color: #fff;
+  border-radius: 99px;
+  height: 38px;
+  padding: 0 14px;
+  cursor: pointer;
+  font: 600 13px Poppins,system-ui,sans-serif;
+  white-space: nowrap;
+}
+
+.auth-btn:hover {
+  background: #8b45f5;
+  border-color: #8b45f5;
+}
+
 .ibtn {
   border: 0;
   background: #ffffff14;

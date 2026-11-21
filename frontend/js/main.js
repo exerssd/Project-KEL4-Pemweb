@@ -41,3 +41,4 @@ initFilters();
 initModal();
 startCountdown();
 initThemeToggle();
+initAuth();

@@ -22,7 +22,10 @@
 <header><div class="wrap nav">
 <a class="logo" href="#top"><svg width="30" height="30" viewBox="0 0 32 32"><use href="#g"/></svg>VIOLET<b>STORE</b></a>
 <nav><a href="#produk">Top Up RBX</a><a href="#game">Game</a><a href="#rank">Leaderboard</a><a href="#bayar">Pembayaran</a><a href="https://wa.me/6280000000000" target="_blank" rel="noopener">Chat Admin</a></nav>
+<div class="nav-actions">
+<button class="auth-btn" id="auth-open" type="button">Masuk / Daftar</button>
 <button class="ibtn" id="th" aria-label="Ganti tema">🌓</button>
+</div>
 </div></header>
 
 <!-- ===== KONTEN UTAMA ===== -->
@@ -112,10 +115,39 @@
 <div id="ok" hidden style="text-align:center;padding:20px 0"><div style="font-size:52px">✅</div><h3>Pesanan dibuat!</h3><p class="sub" id="oi" style="margin-top:6px"></p><button class="btn p" id="ok2" style="margin-top:18px">Selesai</button></div>
 </div></div>
 
+<!-- ===== LOGIN / SIGN UP ===== -->
+<div class="ov" id="auth-modal">
+  <div class="md auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+    <button class="ibtn x" id="auth-close" type="button" aria-label="Tutup">✕</button>
+    <h3 id="auth-title">Akun VioletStore</h3>
+    <div class="auth-tabs" aria-label="Pilih proses akun">
+      <button class="on" type="button" data-auth-tab="login">Masuk</button>
+      <button type="button" data-auth-tab="register">Daftar</button>
+    </div>
+    <p class="auth-message" id="auth-message" role="alert"></p>
+    <form id="auth-form">
+      <div class="field" id="auth-name-field" hidden>
+        <label for="auth-name">Nama</label>
+        <input class="in" id="auth-name" name="name" autocomplete="name" minlength="2">
+      </div>
+      <div class="field">
+        <label for="auth-email">Email</label>
+        <input class="in" id="auth-email" name="email" type="email" autocomplete="email" required>
+      </div>
+      <div class="field">
+        <label for="auth-password">Password</label>
+        <input class="in" id="auth-password" name="password" type="password" autocomplete="current-password" minlength="8" required>
+      </div>
+      <button class="btn p auth-submit" id="auth-submit" type="submit">Masuk</button>
+    </form>
+  </div>
+</div>
+
 <!-- JavaScript (urutan penting) -->
 <script src="js/data.js"></script>
 <script src="js/render.js"></script>
 <script src="js/modal.js"></script>
+<script src="js/auth.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
