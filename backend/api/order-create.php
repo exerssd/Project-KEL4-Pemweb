@@ -33,7 +33,12 @@ try {
     if ($product['stock'] !== null)
         $pdo->prepare('UPDATE products SET stock = stock - ? WHERE id = ?')->execute([$quantity, $product['id']]);
     $pdo->commit();
-    json_response(['message' => 'Pesanan berhasil dibuat.', 'order_number' => $number, 'total' => $total], 201);
+    json_response([
+        'message' => 'Pesanan berhasil dibuat.',
+        'order_number' => $number,
+        'total' => $total,
+        'status' => 'pending',
+    ], 201);
 } catch (Throwable $exception) {
 
     if ($pdo->inTransaction())

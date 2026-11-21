@@ -9,6 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = (int) ($_POST['id'] ?? 0);
     if ($action === 'delete' && $id)
         $pdo->prepare('UPDATE products SET is_active=0 WHERE id=?')->execute([$id]);
+
     if ($action === 'save') {
         $name = clean_string($_POST['name'] ?? '', 150);
         $price = (int) ($_POST['price'] ?? 0);
@@ -22,11 +23,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         else
             $pdo->prepare('INSERT INTO products (name,description,price,stock,image_url) VALUES (?,?,?,?,?)')->execute([$name, $description ?: null, $price, $stock, $image ?: null]);
     }
+
     if (!$error) {
         header('Location: products.php');
         exit;
     }
 }
+
 $edit = isset($_GET['edit']) ? $pdo->prepare('SELECT * FROM products WHERE id=?') : null;
 if ($edit) {
     $edit->execute([(int) $_GET['edit']]);
@@ -41,7 +44,7 @@ $rows = $pdo->query('SELECT * FROM products ORDER BY is_active DESC,id DESC')->f
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Produk - VioletStore</title>
+    <title>Produk - alifstore</title>
     <link rel="stylesheet" href="admin.css">
 </head>
 

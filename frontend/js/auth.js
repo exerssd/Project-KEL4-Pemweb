@@ -1,8 +1,9 @@
+// Frontend only: send requests to the PHP API and update the auth UI.
 const AUTH_API = "../backend/api/auth.php";
 let authMode = "login";
 let currentUser = null;
 
-async function authRequest(action, body = null) {
+async function sendAuthRequest(action, body = null) {
   const options = { credentials: "same-origin" };
 
   if (body) {
@@ -76,7 +77,7 @@ async function logoutCurrentUser() {
   logoutButton.disabled = true;
 
   try {
-    await authRequest("logout");
+    await sendAuthRequest("logout");
     currentUser = null;
     updateAuthButton();
   } catch (error) {
@@ -88,7 +89,7 @@ async function logoutCurrentUser() {
 
 async function loadCurrentUser() {
   try {
-    const data = await authRequest("profile");
+    const data = await sendAuthRequest("profile");
     currentUser = data.user;
   } catch {
     currentUser = null;
@@ -126,7 +127,7 @@ function initAuth() {
     if (authMode === "register") payload.name = $("#auth-name").value;
 
     try {
-      const data = await authRequest(authMode, payload);
+      const data = await sendAuthRequest(authMode, payload);
       currentUser = data.user;
       closeAuthModal();
       updateAuthButton();

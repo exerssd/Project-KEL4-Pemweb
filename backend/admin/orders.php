@@ -4,6 +4,12 @@ require_once __DIR__ . '/../includes/functions.php';
 require_admin_page();
 $pdo = db();
 $valid = ['pending', 'processed', 'completed', 'cancelled'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'delete') {
+    $pdo->prepare("DELETE FROM orders WHERE id = ? AND status = 'cancelled'")
+        ->execute([(int) ($_POST['id'] ?? 0)]);
+    header('Location: orders.php');
+    exit;
+}
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && in_array($_POST['status'] ?? '', $valid, true)) {
     $pdo->prepare('UPDATE orders SET status=? WHERE id=?')->execute([$_POST['status'], (int) $_POST['id']]);
     header('Location: orders.php');
@@ -72,6 +78,14 @@ $orders = $pdo->query('SELECT o.*,u.name customer_name,u.email FROM orders o JOI
                                                 <option value="<?= $status ?>" <?= $o['status'] === $status ? 'selected' : '' ?>>
                                                     <?= ucfirst($status) ?></option><?php endforeach ?>
                                         </select><button class="button">Simpan</button></form>
+                                    <?php if ($o['status'] === 'cancelled'): ?>
+                                        <form method="post" class="inline-form"
+                                            onsubmit="return confirm('Hapus pesanan yang dibatalkan ini secara permanen?')">
+                                            <input type="hidden" name="action" value="delete">
+                                            <input type="hidden" name="id" value="<?= (int) $o['id'] ?>">
+                                            <button class="button danger" type="submit">Hapus</button>
+                                        </form>
+                                    <?php endif ?>
                                 </td>
                             </tr><?php endforeach ?>
                     </tbody>

@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="css/hero.css">
 <link rel="stylesheet" href="css/components.css">
 <link rel="stylesheet" href="css/sections.css">
-<link rel="stylesheet" href="css/footer.css">
-<link rel="stylesheet" href="css/modal.css">
+<link rel="stylesheet" href="css/footer.css?v=orders-delete-20261121">
+<link rel="stylesheet" href="css/modal.css?v=orders-delete-20261121">
 <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
@@ -102,6 +102,7 @@
 
 <!-- Tombol chat mengambang -->
 <a class="wa" href="https://wa.me/6280000000000" target="_blank" rel="noopener">💬 Chat Admin</a>
+<button class="orders-float" id="orders-open" type="button">📦 Pesanan Saya</button>
 
 <!-- ===== POPUP TOP UP ===== -->
 <div class="ov" id="ov"><div class="md" role="dialog" aria-modal="true" aria-labelledby="mt">
@@ -112,9 +113,10 @@
 <div class="step"><b><i>2</i>Username Roblox</b><input class="in" id="un" placeholder="contoh: PurplePlayer123" autocomplete="off"></div>
 <div class="step"><b><i>3</i>Metode pembayaran</b><div class="opts" id="pm"></div></div>
 <div class="tot"><span>Total bayar</span><b id="tt">Rp0</b></div>
+<p class="order-message" id="order-message" role="alert"></p>
 <button class="btn p" id="go" style="width:100%;margin-top:14px" disabled>Bayar Sekarang</button>
 </div>
-<div id="ok" hidden style="text-align:center;padding:20px 0"><div style="font-size:52px">✅</div><h3>Pesanan dibuat!</h3><p class="sub" id="oi" style="margin-top:6px"></p><button class="btn p" id="ok2" style="margin-top:18px">Selesai</button></div>
+<div id="ok" hidden style="text-align:center;padding:20px 0"><div style="font-size:52px">✅</div><h3>Pesanan dibuat!</h3><p class="sub" id="oi" style="margin-top:6px"></p><div class="order-success-actions"><button class="btn p" id="show-orders" type="button">Lihat Pesanan Saya</button><button class="btn p" id="ok2" type="button">Selesai</button></div></div>
 </div></div>
 
 <!-- ===== LOGIN / SIGN UP ===== -->
@@ -145,11 +147,21 @@
   </div>
 </div>
 
+  <!-- ===== PESANAN SAYA ===== -->
+  <div class="ov" id="orders-modal">
+    <div class="md customer-orders" role="dialog" aria-modal="true" aria-labelledby="orders-title">
+      <button class="ibtn x" id="orders-close" type="button" aria-label="Tutup">✕</button>
+      <h3 id="orders-title">Pesanan Saya</h3>
+      <p class="order-message" id="orders-message" role="status"></p>
+      <div id="customer-orders-list"></div>
+    </div>
+  </div>
+
 <!-- JavaScript (urutan penting) -->
 <script src="js/data.js"></script>
 <script src="js/render.js"></script>
-<script src="js/modal.js"></script>
-<script src="js/auth.js"></script>
+<script src="js/modal.js?v=orders-history-js-20261121"></script>
+<script src="js/auth.js?v=orders-delete-20261121"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

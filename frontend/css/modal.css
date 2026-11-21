@@ -169,3 +169,64 @@
   width: 100%;
   margin-top: 16px;
 }
+
+.order-message {
+  min-height: 22px;
+  margin-top: 10px;
+  color: #d93652;
+  font-size: 13px;
+}
+
+.order-success-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.customer-orders {
+  max-width: 640px;
+}
+
+.customer-orders h3 {
+  margin-right: 46px;
+}
+
+.customer-order {
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+}
+
+.customer-order:first-child {
+  margin-top: 8px;
+}
+
+.customer-order-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-weight: 600;
+}
+
+.customer-order-details {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.customer-order-delete {
+  margin-top: 8px;
+  border: 0;
+  border-radius: 8px;
+  background: #d93652;
+  color: #fff;
+  padding: 7px 12px;
+  cursor: pointer;
+  font: 600 12px Poppins,system-ui,sans-serif;
+}
+
+.customer-order-delete:disabled {
+  opacity: .6;
+  cursor: wait;
+}
