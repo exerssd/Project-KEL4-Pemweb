@@ -4,42 +4,69 @@ require_once __DIR__ . '/../includes/functions.php';
 
 $admin = require_admin_page();
 $pdo = db();
-$counts = ['products' => (int) $pdo->query('SELECT COUNT(*) FROM products WHERE is_active=1')->fetchColumn(), 'orders' => (int) $pdo->query('SELECT COUNT(*) FROM orders')->fetchColumn(), 'pending' => (int) $pdo->query("SELECT COUNT(*) FROM orders WHERE status='pending'")->fetchColumn()];
-$orders = $pdo->query('SELECT order_number,product_name,total,status,created_at FROM orders ORDER BY id DESC LIMIT 5')->fetchAll();
+$counts = $pdo->query(
+    "SELECT
+        (SELECT COUNT(*) FROM products WHERE is_active = 1) AS products,
+        (SELECT COUNT(*) FROM orders) AS orders,
+        (SELECT COUNT(*) FROM orders WHERE status = 'pending') AS pending"
+)->fetch();
+$orders = $pdo->query(
+    'SELECT order_number, product_name, total, status, created_at
+     FROM orders
+     ORDER BY id DESC
+     LIMIT 5'
+)->fetchAll();
 ?>
 <!doctype html>
 <html lang="id">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Dashboard - AlifStore</title>
     <link rel="stylesheet" href="admin.css">
 </head>
-
 <body>
     <header class="topbar">
-        <div class="shell"><a class="brand" href="index.php">VIOLET<span>STORE</span></a>
-            <nav class="nav"><a class="active" href="index.php">Dashboard</a><a href="products.php">Produk</a><a
-                    href="orders.php">Pesanan</a><a class="logout" href="logout.php">Keluar</a></nav>
+        <div class="shell">
+            <a class="brand" href="index.php">VIOLET<span>STORE</span></a>
+            <nav class="nav">
+                <a class="active" href="index.php">Dashboard</a>
+                <a href="products.php">Produk</a>
+                <a href="orders.php">Pesanan</a>
+                <a class="logout" href="logout.php">Keluar</a>
+            </nav>
         </div>
     </header>
+
     <main class="shell page">
         <div class="page-head">
             <div>
                 <p class="eyebrow">Ringkasan toko</p>
                 <h1>Selamat datang, <?= e($admin['name']) ?></h1>
                 <p class="subtitle">Pantau aktivitas AlifStore dari satu halaman.</p>
-            </div><a class="button" href="products.php">Kelola produk</a>
+            </div>
+            <a class="button" href="products.php">Kelola produk</a>
         </div>
+
         <section class="stat-grid">
-            <article class="stat"><small>Produk aktif</small><strong><?= $counts['products'] ?></strong></article>
-            <article class="stat"><small>Semua pesanan</small><strong><?= $counts['orders'] ?></strong></article>
-            <article class="stat"><small>Menunggu diproses</small><strong><?= $counts['pending'] ?></strong></article>
+            <article class="stat">
+                <small>Produk aktif</small>
+                <strong><?= (int) $counts['products'] ?></strong>
+            </article>
+            <article class="stat">
+                <small>Semua pesanan</small>
+                <strong><?= (int) $counts['orders'] ?></strong>
+            </article>
+            <article class="stat">
+                <small>Menunggu diproses</small>
+                <strong><?= (int) $counts['pending'] ?></strong>
+            </article>
         </section>
+
         <section class="card">
             <div class="card-head">
-                <h2>Pesanan terbaru</h2><a class="button secondary" href="orders.php">Lihat semua</a>
+                <h2>Pesanan terbaru</h2>
+                <a class="button secondary" href="orders.php">Lihat semua</a>
             </div>
             <div class="table-wrap">
                 <table>
@@ -52,18 +79,22 @@ $orders = $pdo->query('SELECT order_number,product_name,total,status,created_at 
                             <th>Dibuat</th>
                         </tr>
                     </thead>
-                    <tbody><?php if (!$orders): ?>
+                    <tbody>
+                        <?php if (!$orders): ?>
                             <tr>
                                 <td colspan="5" class="muted">Belum ada pesanan.</td>
-                            </tr><?php endif;
-                    foreach ($orders as $order): ?>
+                            </tr>
+                        <?php endif ?>
+
+                        <?php foreach ($orders as $order): ?>
                             <tr>
                                 <td><b><?= e($order['order_number']) ?></b></td>
                                 <td><?= e($order['product_name']) ?></td>
                                 <td class="amount">Rp<?= number_format($order['total'], 0, ',', '.') ?></td>
                                 <td><span class="badge <?= e($order['status']) ?>"><?= e($order['status']) ?></span></td>
                                 <td class="muted"><?= e($order['created_at']) ?></td>
-                            </tr><?php endforeach ?>
+                            </tr>
+                        <?php endforeach ?>
                     </tbody>
                 </table>
             </div>
