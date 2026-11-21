@@ -44,13 +44,13 @@ $rows = $pdo->query('SELECT * FROM products ORDER BY is_active DESC,id DESC')->f
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Produk - alifstore</title>
+    <title>Produk - AlifStore</title>
     <link rel="stylesheet" href="admin.css">
 </head>
 
 <body>
     <header class="topbar">
-        <div class="shell"><a class="brand" href="index.php">VIOLET<span>STORE</span></a>
+        <div class="shell"><a class="brand" href="index.php">ALIF<span>STORE</span></a>
             <nav class="nav"><a href="index.php">Dashboard</a><a class="active" href="products.php">Produk</a><a
                     href="orders.php">Pesanan</a><a class="logout" href="logout.php">Keluar</a></nav>
         </div>

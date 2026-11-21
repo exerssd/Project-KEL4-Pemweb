@@ -23,13 +23,13 @@ $orders = $pdo->query('SELECT o.*,u.name customer_name,u.email FROM orders o JOI
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Pesanan - VioletStore</title>
+    <title>Pesanan - AlifStore</title>
     <link rel="stylesheet" href="admin.css">
 </head>
 
 <body>
     <header class="topbar">
-        <div class="shell"><a class="brand" href="index.php">VIOLET<span>STORE</span></a>
+        <div class="shell"><a class="brand" href="index.php">ALIF<span>STORE</span></a>
             <nav class="nav"><a href="index.php">Dashboard</a><a href="products.php">Produk</a><a class="active"
                     href="orders.php">Pesanan</a><a class="logout" href="logout.php">Keluar</a></nav>
         </div>

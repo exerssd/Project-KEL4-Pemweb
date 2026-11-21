@@ -28,7 +28,7 @@ $orders = $pdo->query(
 <body>
     <header class="topbar">
         <div class="shell">
-            <a class="brand" href="index.php">VIOLET<span>STORE</span></a>
+            <a class="brand" href="index.php">ALIF<span>STORE</span></a>
             <nav class="nav">
                 <a class="active" href="index.php">Dashboard</a>
                 <a href="products.php">Produk</a>

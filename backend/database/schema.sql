@@ -50,4 +50,4 @@ CREATE TABLE orders (
 ) ENGINE=InnoDB;
 
 -- Create an admin after import with a PHP-generated password hash:
--- INSERT INTO users (name,email,password_hash,role) VALUES ('Administrator','admin@violetstore.test','PASSWORD_HASH','admin');
+-- INSERT INTO users (name,email,password_hash,role) VALUES ('Administrator','admin@alifstore.test','PASSWORD_HASH','admin');
