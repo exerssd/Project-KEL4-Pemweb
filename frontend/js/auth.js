@@ -55,23 +55,35 @@ function setAuthMode(mode) {
 
 function updateAuthButton() {
   const button = $("#auth-open");
+  const userName = $("#nav-user");
+  const logoutButton = $("#auth-logout");
+
   if (!currentUser) {
-    button.textContent = "Masuk / Daftar";
-    button.onclick = openAuthModal;
+    button.hidden = false;
+    userName.hidden = true;
+    logoutButton.hidden = true;
     return;
   }
 
-  button.textContent = currentUser.name;
-  button.onclick = async () => {
-    if (!confirm(`Keluar sebagai ${currentUser.name}?`)) return;
-    try {
-      await authRequest("logout");
-      currentUser = null;
-      updateAuthButton();
-    } catch (error) {
-      alert(error.message);
-    }
-  };
+  button.hidden = true;
+  userName.textContent = currentUser.name;
+  userName.hidden = false;
+  logoutButton.hidden = false;
+}
+
+async function logoutCurrentUser() {
+  const logoutButton = $("#auth-logout");
+  logoutButton.disabled = true;
+
+  try {
+    await authRequest("logout");
+    currentUser = null;
+    updateAuthButton();
+  } catch (error) {
+    alert(error.message);
+  } finally {
+    logoutButton.disabled = false;
+  }
 }
 
 async function loadCurrentUser() {
@@ -85,6 +97,8 @@ async function loadCurrentUser() {
 }
 
 function initAuth() {
+  $("#auth-open").addEventListener("click", openAuthModal);
+  $("#auth-logout").addEventListener("click", logoutCurrentUser);
   $("#auth-close").addEventListener("click", closeAuthModal);
 
   document.querySelectorAll("[data-auth-tab]").forEach((tab) => {
