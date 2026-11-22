@@ -7,8 +7,19 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
     $id = (int) ($_POST['id'] ?? 0);
-    if ($action === 'delete' && $id)
-        $pdo->prepare('UPDATE products SET is_active=0 WHERE id=?')->execute([$id]);
+    if ($action === 'delete' && $id) {
+        try {
+            $delete = $pdo->prepare('DELETE FROM products WHERE id=?');
+            $delete->execute([$id]);
+            if ($delete->rowCount() === 0)
+                $error = 'Produk tidak ditemukan atau sudah dihapus.';
+        } catch (PDOException $exception) {
+            if (($exception->errorInfo[1] ?? null) === 1451)
+                $error = 'Produk tidak dapat dihapus karena masih digunakan pada pesanan.';
+            else
+                throw $exception;
+        }
+    }
 
     if ($action === 'save') {
         $name = clean_string($_POST['name'] ?? '', 150);
@@ -60,7 +71,7 @@ $rows = $pdo->query('SELECT * FROM products ORDER BY is_active DESC,id DESC')->f
             <div>
                 <p class="eyebrow">Katalog</p>
                 <h1>Kelola produk</h1>
-                <p class="subtitle">Tambah, ubah, atau nonaktifkan produk toko.</p>
+                <p class="subtitle">Tambah, ubah, atau hapus produk toko secara permanen.</p>
             </div>
         </div>
         <div class="split">
@@ -111,16 +122,20 @@ $rows = $pdo->query('SELECT * FROM products ORDER BY is_active DESC,id DESC')->f
                                     <td class="amount">Rp<?= number_format($p['price'], 0, ',', '.') ?></td>
                                     <td><?= $p['stock'] === null ? 'Tidak terbatas' : e($p['stock']) ?></td>
                                     <td><span
-                                            class="badge <?= $p['is_active'] ? 'active-status' : 'inactive' ?>"><?= $p['is_active'] ? 'Aktif' : 'Dihapus' ?></span>
+                                            class="badge <?= $p['is_active'] ? 'active-status' : 'inactive' ?>"><?= $p['is_active'] ? 'Aktif' : 'Nonaktif' ?></span>
                                     </td>
-                                    <td><?php if ($p['is_active']): ?>
-                                            <div class="actions"><a class="button secondary" href="?edit=<?= $p['id'] ?>">Ubah</a>
-                                                <form class="inline-form" method="post"
-                                                    onsubmit="return confirm('Hapus produk ini?')"><input type="hidden"
-                                                        name="action" value="delete"><input type="hidden" name="id"
-                                                        value="<?= $p['id'] ?>"><button class="button danger">Hapus</button>
-                                                </form>
-                                            </div><?php endif ?>
+                                    <td>
+                                        <div class="actions">
+                                            <?php if ($p['is_active']): ?>
+                                                <a class="button secondary" href="?edit=<?= $p['id'] ?>">Ubah</a>
+                                            <?php endif ?>
+                                            <form class="inline-form" method="post"
+                                                onsubmit="return confirm('Produk akan dihapus permanen. Lanjutkan?')">
+                                                <input type="hidden" name="action" value="delete">
+                                                <input type="hidden" name="id" value="<?= $p['id'] ?>">
+                                                <button class="button danger">Hapus</button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr><?php endforeach ?>
                         </tbody>
