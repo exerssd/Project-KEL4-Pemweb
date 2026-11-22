@@ -114,7 +114,19 @@ $rows = $pdo->query('SELECT * FROM products ORDER BY is_active DESC,id DESC')->f
                                 <tr>
                                     <td colspan="5" class="muted">Belum ada produk.</td>
                                 </tr><?php endif;
-                        foreach ($rows as $p): ?>
+                        foreach ($rows as $p):
+                            $isOutOfStock = $p['stock'] !== null && (int) $p['stock'] === 0;
+
+                            if (!$p['is_active']) {
+                                $status = 'Nonaktif';
+                            } elseif ($isOutOfStock) {
+                                $status = 'Habis';
+                            } else {
+                                $status = 'Aktif';
+                            }
+
+                            $statusClass = $status === 'Aktif' ? 'active-status' : 'inactive';
+                            ?>
                                 <tr>
                                     <td><b><?= e($p['name']) ?></b><?php if ($p['description']): ?>
                                             <div class="muted"><?= e($p['description']) ?></div><?php endif ?>
@@ -122,7 +134,7 @@ $rows = $pdo->query('SELECT * FROM products ORDER BY is_active DESC,id DESC')->f
                                     <td class="amount">Rp<?= number_format($p['price'], 0, ',', '.') ?></td>
                                     <td><?= $p['stock'] === null ? 'Tidak terbatas' : e($p['stock']) ?></td>
                                     <td><span
-                                            class="badge <?= $p['is_active'] ? 'active-status' : 'inactive' ?>"><?= $p['is_active'] ? 'Aktif' : 'Nonaktif' ?></span>
+                                            class="badge <?= $statusClass ?>"><?= e($status) ?></span>
                                     </td>
                                     <td>
                                         <div class="actions">
