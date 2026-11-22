@@ -236,6 +236,11 @@ tbody tr:hover {
     color: var(--red);
 }
 
+.out-of-stock {
+    background: var(--orange-bg);
+    color: var(--orange);
+}
+
 .split {
     display: grid;
     grid-template-columns: 350px minmax(0, 1fr);

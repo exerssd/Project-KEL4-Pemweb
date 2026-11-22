@@ -115,17 +115,24 @@ $rows = $pdo->query('SELECT * FROM products ORDER BY is_active DESC,id DESC')->f
                                     <td colspan="5" class="muted">Belum ada produk.</td>
                                 </tr><?php endif;
                         foreach ($rows as $p):
-                            $isOutOfStock = $p['stock'] !== null && (int) $p['stock'] === 0;
+                            $isOutOfStock = $p['stock'] !== null
+                                && trim((string) $p['stock']) === '0';
 
-                            if (!$p['is_active']) {
-                                $status = 'Nonaktif';
-                            } elseif ($isOutOfStock) {
+                            if ($isOutOfStock) {
                                 $status = 'Habis';
+                            } elseif (!$p['is_active']) {
+                                $status = 'Nonaktif';
                             } else {
                                 $status = 'Aktif';
                             }
 
-                            $statusClass = $status === 'Aktif' ? 'active-status' : 'inactive';
+                            if ($status === 'Aktif') {
+                                $statusClass = 'active-status';
+                            } elseif ($status === 'Habis') {
+                                $statusClass = 'out-of-stock';
+                            } else {
+                                $statusClass = 'inactive';
+                            }
                             ?>
                                 <tr>
                                     <td><b><?= e($p['name']) ?></b><?php if ($p['description']): ?>
